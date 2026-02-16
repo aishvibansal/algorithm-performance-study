@@ -44,3 +44,38 @@ def insertion_sort(arr):
 
     return counter
 
+def merge_sort(arr):
+    counter = Counter()
+    arr_copy = arr.copy()
+
+    def merge_sort_recursive(arr):
+        if len(arr) <= 1:
+            return arr
+
+        mid = len(arr) // 2
+        left = merge_sort_recursive(arr[:mid])
+        right = merge_sort_recursive(arr[mid:])
+
+        return merge(left, right)
+
+    def merge(left, right):
+        merged = []
+        i = j = 0
+
+        while i < len(left) and j < len(right):
+            counter.comparisons += 1
+            if left[i] <= right[j]:
+                merged.append(left[i])
+                i += 1
+            else:
+                merged.append(right[j])
+                j += 1
+
+        merged.extend(left[i:])
+        merged.extend(right[j:])
+        return merged
+
+    merge_sort_recursive(arr_copy)
+    return counter
+
+
