@@ -78,4 +78,63 @@ def merge_sort(arr):
     merge_sort_recursive(arr_copy)
     return counter
 
+import random
+
+
+def quicksort_first_pivot(arr):
+    counter = Counter()
+    arr_copy = arr.copy()
+
+    def quicksort(low, high):
+        if low < high:
+            p = partition(low, high)
+            quicksort(low, p - 1)
+            quicksort(p + 1, high)
+
+    def partition(low, high):
+        pivot = arr_copy[low]
+        i = low + 1
+
+        for j in range(low + 1, high + 1):
+            counter.comparisons += 1
+            if arr_copy[j] < pivot:
+                arr_copy[i], arr_copy[j] = arr_copy[j], arr_copy[i]
+                i += 1
+
+        arr_copy[low], arr_copy[i - 1] = arr_copy[i - 1], arr_copy[low]
+        return i - 1
+
+    quicksort(0, len(arr_copy) - 1)
+    return counter
+
+
+def quicksort_random_pivot(arr):
+    counter = Counter()
+    arr_copy = arr.copy()
+
+    def quicksort(low, high):
+        if low < high:
+            p = partition(low, high)
+            quicksort(low, p - 1)
+            quicksort(p + 1, high)
+
+    def partition(low, high):
+        pivot_index = random.randint(low, high)
+        arr_copy[low], arr_copy[pivot_index] = arr_copy[pivot_index], arr_copy[low]
+
+        pivot = arr_copy[low]
+        i = low + 1
+
+        for j in range(low + 1, high + 1):
+            counter.comparisons += 1
+            if arr_copy[j] < pivot:
+                arr_copy[i], arr_copy[j] = arr_copy[j], arr_copy[i]
+                i += 1
+
+        arr_copy[low], arr_copy[i - 1] = arr_copy[i - 1], arr_copy[low]
+        return i - 1
+
+    quicksort(0, len(arr_copy) - 1)
+    return counter
+
 
