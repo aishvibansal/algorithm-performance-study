@@ -1,81 +1,61 @@
-# Algorithm Performance Study
+# Algorithm Performance Study & Benchmarking Framework
 
-Empirical analysis of sorting algorithms comparing theoretical time complexity with measured performance across varied input distributions.
+A configurable benchmarking framework for empirically analyzing sorting algorithm performance, pivot sensitivity, and real-world tradeoffs beyond theoretical Big-O complexity.
 
 ---
 
-## 📚 Overview
+## 📌 Overview
 
-This project investigates how classical sorting algorithms behave in practice versus their theoretical asymptotic complexity.
+This project investigates how classical sorting algorithms behave in practice compared to their theoretical asymptotic complexity.
 
-Rather than relying purely on Big-O notation, the study instruments algorithms to count comparisons and measures real execution time to analyze:
+Rather than relying purely on Big-O notation, algorithms are instrumented to measure comparison counts and execution time across multiple input distributions.
 
-- Best-case behavior
-- Average-case behavior
-- Empirical crossover points
+The study focuses on:
+
+- Empirical growth rate validation
 - Constant factor impact
+- Worst-case degradation
+- Pivot strategy sensitivity
+- Real-world engineering tradeoffs
 
 ---
 
-## 🛠 Algorithms Implemented
+## 🛠 Implemented Algorithms
 
-- Bubble Sort (with early stopping optimization)
-- Insertion Sort
-- Merge Sort
+- **Bubble Sort** (with early stopping optimization)
+- **Insertion Sort**
+- **Merge Sort**
+- **Quicksort (First Pivot)**
+- **Quicksort (Random Pivot)**
 
-All algorithms are instrumented to count comparisons for empirical complexity validation.
+All algorithms are instrumented to track comparison counts for analytical validation.
 
 ---
 
-## 🔬 Experiments Conducted
+## 🔬 Key Experiments
 
-### 1️⃣ Best vs Random Input (Bubble Sort)
-- Demonstrated linear best-case behavior with early stopping.
-- Verified quadratic growth for random input.
+### 1️⃣ Best vs Worst Case (Bubble Sort)
+- Verified linear best-case behavior using early stopping.
+- Demonstrated quadratic growth on random input.
 
-### 2️⃣ Bubble vs Insertion (Comparison Count)
-- Observed both grow quadratically.
-- Insertion sort showed lower constant factor.
-
-### 3️⃣ Insertion vs Merge (Runtime Analysis)
-- Measured execution time across multiple trials.
+### 2️⃣ Insertion vs Merge – Crossover Analysis
 - Identified empirical crossover point (~n ≈ 100).
 - Demonstrated dominance of constant factors at small input sizes.
+- Validated O(n log n) superiority at larger scales.
 
----
+### 3️⃣ Pivot Sensitivity in Quicksort
+- Demonstrated worst-case O(n²) degradation using first-element pivot on sorted input.
+- Observed recursion depth explosion leading to stack overflow.
+- Showed randomized pivot preserves expected O(n log n) behavior.
+- Empirically validated implementation sensitivity under adversarial inputs.
 
-## 📈 Key Insights
+## 🧠 Engineering Insights
+- Big-O describes asymptotic growth, not real-world runtime at finite scales.
+- Constant factors and memory behavior significantly affect performance.
+- Quicksort performance depends heavily on pivot selection.
+- Recursive algorithms can fail catastrophically under adversarial input.
+- Randomization acts as a probabilistic safeguard against worst-case degeneration.
+- Merge-based approaches provide predictable performance guarantees.
 
-- Big-O describes growth rate, not real-world performance at small scales.
-- Constant factors and implementation details significantly affect runtime.
-- Insertion sort outperforms merge sort for small input sizes due to lower overhead.
-- Merge sort dominates at larger scales due to asymptotic efficiency.
 
----
-
-## 🧠 Why This Matters
-
-Real-world systems (e.g., Python's Timsort) use hybrid strategies because asymptotic complexity alone does not determine performance.
-
-This project demonstrates experimentally why small-scale optimizations matter in practical algorithm engineering.
-
----
-
-## 🧪 Tech Stack
-
-- Python
-- Jupyter Notebook
-- Matplotlib
-- NumPy
-
----
-
-## 🚀 Future Work
-
-- Log-log empirical slope analysis
-- Quicksort pivot strategy comparison
-- Variance analysis across randomized trials
-- Memory overhead comparison
-
----
 
